@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  aws: # configure docker to run aws commandline
+    image: amazon/aws-cli #abdennour/aws
+    volumes: # Specifies the volumes to be created
+      # This is analogous to running docker volume create.
+      - .:/code #good practise to mount the current directory
+      # so we can have same experience as native command line
+      - aws-creds:/root/.aws # we will put the user credential in a volume named aws-cred
+        # and this volume will be mounted in /root/.aws directory
+    restart: "no" #no need to restart the cotainer, since it is not a daemon, it is only a cmd line
+    working_dir:
+      /code #since the current directory is mounted in /code
+      # the working_dir should be the same
+  
+volumes:
+  aws-creds: #above we specified a volume called aws-cred,
+    #so we should define this volume
+    name: aws-creds #we will always refer the volume with the same name
+
